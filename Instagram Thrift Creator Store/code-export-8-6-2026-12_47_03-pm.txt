@@ -1,0 +1,57 @@
+shopowner [icon: store]{
+  id serial pk
+  user_details string
+  products_details string
+  payment_info text
+  available_stock text
+}
+
+customerinfo [icon: consumer]{
+  id serial pk
+  name string
+  email
+  avatar_img text
+  shopowner int fk
+}
+itemslist [icon: items]{
+  id serial pk
+  thrift_items string
+  handmade_items string
+  customerinfo int fk
+}
+payment [icon: payment]{
+  id serial pk
+  customer_name string
+  amount int
+  payment_method string
+  payment_status text
+  history text
+  paymentpaid_timestamp date
+  customerinfo int fk
+}
+stock [icon: stock]{
+ id serial pk
+ available_thrift_items int
+ available_handmade_items int
+ refilled_date date
+ shopowner int fk
+}
+shipping [icon:delivery]{
+  id serial pk
+  customer_name string
+  email string
+  address text
+  payment_method string
+  delivery_partner string
+  amount_charged int
+  delivery_date date
+  shopowner int fk
+}
+shopowner.id < customerinfo.id
+customerinfo.id < itemslist.id
+customerinfo.id - payment.id
+shopowner.id < stock.id
+shopowner.id < shipping.id
+customerinfo.id <> payment.id
+customerinfo.id < itemslist.id
+customerinfo.id < shipping.id
