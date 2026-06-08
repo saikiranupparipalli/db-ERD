@@ -1,0 +1,70 @@
+title Entity Relationship Diagram
+colorMode pastel
+styleMode watercolor
+ patientinfo [icon: users]{
+  id serial pk
+  patient_name string
+  sex string
+  age string
+  reports text
+  avatar_url text
+ }
+ doctors [icon: doctor]{
+  id serial pk
+  doc_name string
+  specialized_in text
+  experience text
+  patientinfo int fk
+ }
+appointments [icon: appointment]{
+  id serial pk
+  enrolled_patients int
+  doctor_name string
+  patient_name string
+  schedule_timing date
+}
+consultations [icon: consulation]{
+  id serial pk
+  patient_name string
+  doc_name string
+  schedule_timing date
+}
+diagnostics [icon: tests]{
+  id serial pk
+  patient_name string
+  tests_performed text
+}
+
+reports [icon: report]{
+  id serial pk
+  patient_name string
+  sex string
+  age string
+  appointments_booked text
+  consulations_booked text
+  diagnostics_performed text
+  appointments int fk
+  consulations int fk
+  diagnostics int fk
+  patientinfo int fk
+}
+
+payment [icon: payment]{
+  id serial pk
+  reports int fk
+  payment_method text
+  transaction_history text
+}
+ doctors.id < patientinfo.id
+ patientinfo.id <> reports.id
+ patientinfo.id - payment.id
+ doctors.id < payment.id
+ reports.id < payment.id
+ 
+
+ appointments.id < reports.id
+ consultations.id < reports.id
+ diagnostics.id < reports.id
+ patientinfo.id < consultations.id
+ patientinfo.id < diagnostics.id
+patientinfo.id < appointments.id
