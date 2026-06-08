@@ -1,0 +1,119 @@
+ skyscraper [icon: building]{
+  id serial pk
+  building_blocks int
+  shafts int
+ }
+
+ block_A [icon: building]{
+  id serial pk
+  no_shafts int
+  passengers int
+  elevators_list int
+  skyscraper int fk
+ }
+
+ elevator_one [icon: elevator]{
+  id serial pk
+  elevator_assignment int
+  floor_req int
+  maintanance int
+  ride_logs int
+  block_A int fk
+ }
+ elevator_assignment [icon: assignment]{
+  id serial pk
+  zones int
+  elevator_one int fk
+  elevator_two int fk
+ }
+ zones [icon: floor]{
+ id  serial pk
+ zone_one int
+ zone_two int
+ elevator_one int fk
+ elevator_two int fk
+ }
+ floor_req [icon: floor]{
+  id serial pk
+  floor_numbers int
+  passengers_entered int
+  elevator_one int fk
+  elevator_two int fk
+ 
+ }
+ maintanance [icon: maintance]{
+  id serial pk
+  installed_on date
+  serviced_on date
+  next_service date
+ elevator_one int fk
+   elevator_two int fk
+ }
+ ride_logs [icon: users]{
+  id serial pk
+  passengers_onboarded int
+  ride_counts int
+  elevator_one int fk
+  elevator_two int fk
+ }
+
+ elevator_two [icon: elevator]{
+  id serial pk
+  elevator_assignment int
+  floor_req int
+  maintanance int
+  ride_logs int
+  zones int
+  block_A int fk
+ }
+
+ block_B [icon: building]{
+  id serial pk
+  no_shafts int
+  passengers int
+  elevators_list int
+  skyscraper int fk
+ }
+
+ elevator_three [icon: elevator]{
+  id serial pk
+  elevator_assignment int
+  floor_req int
+  maintanance int
+  ride_logs int
+  block_B int fk
+ }
+ elevator_four [icon: elevator]{
+  id serial pk
+  elevator_assignment int
+  floor_req int
+  maintanance int
+  ride_logs int
+  block_B int fk
+ }
+
+ skyscraper.id < block_A.id
+ skyscraper.id < block_B.id
+ block_A.id < elevator_one.id
+ block_A.id < elevator_two.id
+ block_B.id < elevator_three.id
+ block_B.id < elevator_four.id
+
+
+ elevator_one.elevator_assignment < elevator_assignment.id
+
+ elevator_one.floor_req < floor_req.id
+ elevator_one.ride_logs < ride_logs.id
+ elevator_one.maintanance < maintanance.id
+ elevator_one.zones < zones.zone_one
+
+zones.id <> block_A.id
+
+elevator_two.elevator_assignment < elevator_assignment.id
+
+ elevator_two.floor_req < floor_req.id
+ elevator_two.ride_logs < ride_logs.id
+ elevator_two.maintanance < maintanance.id
+ elevator_two.zones < zones.zone_two
+
+zones.id <> block_B.id
