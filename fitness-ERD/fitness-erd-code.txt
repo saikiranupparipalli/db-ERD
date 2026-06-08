@@ -1,0 +1,86 @@
+ 
+userinfo [icon: user]{
+  int serial pk
+  name string
+  email string
+  avatar_img text
+  weight int
+  height int
+  created_at date
+  updated_at date
+}
+
+fitnessplans [icon: money]{
+  id serial pk
+  plan_name string
+  price int
+  customer_name string
+  enrolled_users int
+ userinfo int fk
+}
+consultations [icon: appoinment]{
+  id serial pk
+  timing date
+  user_name string
+  enrolled_users int
+  userinfo int fk
+  fitnessplans int fk
+}
+trainer [icon: instructor]{
+  id serial pk
+  trainer_name string
+  skills text
+  specialized_in text
+   
+}
+progess [icon: development]{
+  id serial pk
+  user_details
+  updated_weight int
+  heighted_weight int
+  
+}
+longterm_coaching [icon: coaching]{
+  id serial pk
+  user_name string
+  duration date
+  
+}
+training diet [icon: diet]{
+  id serial pk
+  user_name string
+  diet_info text
+ 
+}
+live_session [icon: session]{
+  id serial pk
+  user_name string
+  live_attendence int
+   
+}
+reports [icon: report]{
+  id serial pk
+  user_name string
+  enrolled_in text
+  progress int fk
+  userinfo int fk
+}
+subcriptions [icon: money]{
+  id serial pk
+  user_name string
+  plan string
+  payment_method text
+  transaction_date date
+  amount_paid int
+  reports int fk
+}
+reports.id < longterm_coaching.id
+reports.id < trainer.id
+reports.id < training diet.id
+reports.id < live_session.id
+reports.id < progess.id
+reports.id < fitnessplans.id
+consultations.id < fitnessplans.id
+userinfo.id < reports.id
+userinfo.id < consultations.id
+subcriptions.id < reports.id
