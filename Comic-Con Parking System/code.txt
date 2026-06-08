@@ -1,0 +1,94 @@
+ visitorinfo [icon: users]{
+  id serial pk
+  name string
+  avatar_url text
+  entered_timestamp date
+  event_pass text
+ }
+ conventioninfo [icon: convention]{
+  id serial pk
+  events text
+ }
+
+events [icon: event]{
+  cosplay string
+  anime_screenings string
+  gaming_showcases string
+  creator_meetup string
+  merchendise_zones string
+  panel_discussions string
+//   conventioninfo int fk
+}
+vehicle [icon: car-front]{
+  id serial pk
+  vehicle_name string
+  vehicle_number int
+}
+parking [icon: parking]{
+  id serial pk
+  vehicle_type string
+  parking_level string
+  vehicle int fk
+}
+ parking_status [icon: parking]{
+  id serial pk
+  status boolean
+  
+ }
+vehicle_type [icon: car]{
+  id serial pk
+  bike string
+  suv string
+  sedan string
+  parking int fk
+}
+parking_level [icon: parking]{
+  id serial pk
+  level_1 int
+  level_2 int
+  level_3 int
+  parking int fk
+}
+parking_ticket [icon: car]{
+  id serial pk
+  vehicle_name string
+  vehicle_type string
+  vehicle_parked_time date
+  vehicle_exited_time date
+  amount_charged int
+  visitorinfo int fk
+  parking_level int fk
+}
+ parking_org [icon: car]{
+  id serial pk
+  reserved_parking text
+ }
+ event_org [icon: car]{
+  id serial pk
+  cosplayers string
+  exhibitors string
+  creators string
+  VIP_guests string
+  staff_members string
+ }
+conventioninfo.events < events.id
+parking.parking_level < parking_level.id
+visitorinfo.id < parking.id
+visitorinfo.id - conventioninfo.id
+visitorinfo.id - vehicle.id
+vehicle.id - parking.id
+parking_level.level_1 - vehicle_type.bike
+parking_level.level_2 - vehicle_type.suv
+parking_level.level_3 - vehicle_type.sedan
+visitorinfo.id < parking_ticket.id
+parking_level.id > parking_ticket.id
+visitorinfo.id < parking.id
+
+visitorinfo.id < parking_level.id
+
+parking_org.reserved_parking < event_org.id
+parking_org.id - parking.id
+event_org.id < parking_ticket.id
+
+vehicle.id - parking_status.id
+parking_status.id - parking.id
